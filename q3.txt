@@ -1,0 +1,60 @@
+class TreeNode:
+	def __init__(self, val, left=None, right=None):
+		self.val = val
+		self.left = left
+		self.right = right
+
+val1 = 8
+val2 = 9
+
+depth = dict()
+ancestors = defaultdict(list)
+def find_distance(root):
+	d1 = depth(val1)
+	d2 = depth(val2)
+	if not d1 or not d2:
+		return None
+	deepest_root_depth = find_deepest_root_depth(root, val1, val2)
+	return d1 + d2 - 2 * deepest_root_depth
+
+def find_deepest_root_depth(val1, val2, root):
+	ances_1 = ancestors[val1]
+	ances_2 = ancestors[val2]
+	depth_d = dict()
+	for ances in ances_1:
+		depth_d = depth(ances)
+	max_depth = 0
+	for ances in ances_2:
+		if ances in depth_d and depth[ances] > max_depth:
+			max_depth = depth[ances]
+	return max_depth
+
+def depth(root, val):
+	if val == root.val:
+		depth[root.val] = 0
+		return 0
+	elif val in depth:
+		return depth[val]
+	else:
+		curr = root
+		return find_depth(curr, val)
+
+def find_depth(curr, val):
+	if curr.val == val:
+		return depth[curr.val]
+	else:
+		left = curr.left
+		right = curr.right
+		if not left and not right:
+			return None
+		if left:
+			depth[left.val] = depth(curr) + 1
+			ancesters[left.val].extend(ancesters[curr.val])
+			ancestors[left.val].append(curr.val)
+			return find_depth(left, val)
+		if right:
+			depth[right.val] = depth(curr) + 1
+			ancesters[right.val].extend(ancesters[curr.val])
+			ancestors[right.val].append(curr.val)
+			return find_depth(right, val)
+		

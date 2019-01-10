@@ -1,0 +1,29 @@
+d = defaultdict(set)
+nums = [1, 2, 3 ...]
+
+def find_k_sum_n(k, n, nums):
+	if k == 0 and n == 0:
+		return {[]} 
+	elif k == 0:
+		return None
+	else:
+		if len(nums) == 0:
+			return None
+		if (k,n) in d:
+			return d[(k,n)]
+		else:
+			s = set()
+			for num in nums:
+				new_nums = num.copy()
+				new_nums.remove(num)
+				subset = find_k_sum_n(k - 1, n - num, new_nums)
+				if subset:
+				 	for item in subset:
+						item.append(num)
+						item.sort()
+						s.add(item)
+			if not s.isempty():	
+				d[k, n] = s
+				return s
+			else:
+				return None	

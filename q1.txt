@@ -1,0 +1,30 @@
+class ListNode:
+	__init__(self):
+		self.val = None
+		self.next = None
+
+
+def pair_wise_rev(head):
+# assume head is of ListNode type or None type
+	if not head.next:
+		return head
+	else:	
+		curr = head 
+		nextn = head.next
+		head.next = nextn.next
+		nextn.next = head
+		head = nextn
+		while(curr.next):
+			nextn = curr.next
+			next2nd = nextn.next
+			if not next2nd:
+				break
+			else:
+				curr.next = next2nd
+				nextn.next = next2nd.next
+				next2nd.next = nextn
+				curr = nextn
+		return head
+
+
+????
